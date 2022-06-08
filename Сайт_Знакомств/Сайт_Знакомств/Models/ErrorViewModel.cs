@@ -1,6 +1,6 @@
 using System;
 
-namespace Meeting_Website.Models
+namespace Сайт_Знакомств.Models
 {
     public class ErrorViewModel
     {
