@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Сайт_Знакомств.Data;
 using Сайт_Знакомств.Models;
 
 namespace Сайт_Знакомств.Controllers
@@ -12,15 +13,17 @@ namespace Сайт_Знакомств.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_context.Users.ToList());
         }
 
         public IActionResult Privacy()

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,12 @@ namespace Сайт_Знакомств.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IWebHostEnvironment _appEnvironment;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment appEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _appEnvironment = appEnvironment;
         }
 
         /// <summary>
@@ -36,12 +38,11 @@ namespace Сайт_Знакомств.Controllers
         {
             if (ModelState.IsValid)
             {
-                //byte[] imageData = null;
-                //// считываем переданный файл в массив байтов
-                //using (var binaryReader = new BinaryReader(model.Avatar.OpenReadStream()))
-                //{
-                //    imageData = binaryReader.ReadBytes((int)model.Avatar.Length);
-                //}
+                string path = "/Files/" + model.Avatar.FileName;
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await model.Avatar.CopyToAsync(fileStream);
+                }
                 var user = new User
                 {
                     Email = model.Email,
@@ -52,7 +53,7 @@ namespace Сайт_Знакомств.Controllers
                     PhoneNumber = model.Phone,
                     Description = model.Description,
                     Sex = model.Sex,
-                    //Avatar = imageData,
+                    Path = path,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

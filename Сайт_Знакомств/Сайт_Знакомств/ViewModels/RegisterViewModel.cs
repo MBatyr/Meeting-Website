@@ -39,8 +39,8 @@ namespace Сайт_Знакомств.ViewModels
         [Display(Name = "Год рождения")]
         public DateTime DateOfBirth { get; set; }
 
-        //[Required]
-        //public IFormFile Avatar { get; set; }
+        [Required]
+        public IFormFile Avatar { get; set; }
 
         [Required]
         public Sex Sex { get; set; }
