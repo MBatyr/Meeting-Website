@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Сайт_Знакомств.ViewModels.NotFullUserInfoViewModel>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+
+
+<div class="row col">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <br />
+            @if (item.User1Id != item.User2Id)
+            {
+
+
+                <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
+                @Html.HiddenFor(modelInfo => item.User1Id)
+                @Html.HiddenFor(modelInfo => item.User2Id)
+
+                @Html.DisplayName("Имя: ")
+                @Html.DisplayFor(modelItem => item.FirstName) <br />
+
+                @Html.DisplayName("Фамилия: ")
+                @Html.DisplayFor(modelItem => item.LastName) <br />
+
+                @Html.DisplayName("Возраст: ")
+                @Html.DisplayFor(modelItem => item.Age)
+                <div class="col">
+                    @Html.ActionLink("Вытратт", "Info", new { user1Id = item.User1Id, user2Id = item.User2Id })
+                </div>
+            }
+
+        </div>
+    }
+
+
+</div>
+
+

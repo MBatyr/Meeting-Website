@@ -1,0 +1,45 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Filter";
+}
+
+
+
+
+<div>
+
+    <form>
+        <h3>Возраст</h3>
+        <div class="form-inline">
+            <input name="userName" type="hidden" value="@User.Identity.Name" />
+            <input name="Age1" class="form-control mr-sm-2" type="number" placeholder="От" required max="100" min="18">
+            <input name="Age2" class="form-control mr-sm-2" type="number" placeholder="До" required max="100" min="18">
+        </div>
+
+        <br />
+        <h3>Пол</h3>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="Sex" value="1" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Мужчина
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="Sex" value="2" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+               Женшина
+            </label>
+        </div>
+        <br /> <input asp-action="UserFilter" asp-controller="Home" class="btn btn-success" type="submit" value="Фильтр" />
+    </form>
+</div> 
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

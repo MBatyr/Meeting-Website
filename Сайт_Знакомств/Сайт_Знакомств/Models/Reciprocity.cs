@@ -23,7 +23,7 @@ namespace Сайт_Знакомств.Models
         public bool User2Connect { get; set; } = false;
 
         public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
+        public  User User2 { get; set; }
 
     }
 }

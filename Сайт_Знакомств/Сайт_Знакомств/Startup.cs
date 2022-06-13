@@ -58,6 +58,7 @@ namespace Сайт_Знакомств
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

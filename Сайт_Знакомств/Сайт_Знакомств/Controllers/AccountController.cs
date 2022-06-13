@@ -104,7 +104,8 @@ namespace Сайт_Знакомств.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        var id = _userManager.Users.FirstOrDefault(x => x.Email == model.Email);
+                        return RedirectToAction("Search", "Home",id);
                     }
                 }
             }

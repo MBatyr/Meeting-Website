@@ -1,0 +1,36 @@
+﻿@model Сайт_Знакомств.ViewModels.NotFullUserInfoViewModel
+
+@{
+    ViewData["Title"] = "Info";
+}
+
+<h1>Info</h1>
+
+<div class="col">
+    <form method="post" action="Liked">
+        <p><img src="@Model.Path" style="width:500px; height:500px " class="rounded-circle"></p>
+        @Html.HiddenFor(modelInfo => Model.User2Id)
+        @Html.HiddenFor(modelInfo => Model.User1Id)
+
+        @Html.DisplayName("Имя: ")
+        @Html.DisplayFor(modelItem => Model.FirstName)
+        @Html.DisplayFor(modelItem => Model.LastName) <br />
+
+        @Html.DisplayName("О себе: ")
+        @Html.DisplayFor(modelItem => Model.Description)<br />
+
+        @Html.DisplayName("Возраст: ")
+        @Html.DisplayFor(modelItem => Model.Age)
+        <div class="col">
+            <a asp-action="Search" asp-controller="Home" class="badge badge-info">Назад</a>
+            <input type="submit" value="Нравится" />
+            <a asp-action="Dislike" asp-controller="Home" class="badge badge-danger">Скрыть</a>
+           
+        </div>
+    </form>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+
