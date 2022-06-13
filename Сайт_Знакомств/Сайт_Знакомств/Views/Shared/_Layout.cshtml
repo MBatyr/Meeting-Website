@@ -26,9 +26,18 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item ml-auto">
-                                <a href="~/Account/Logout">Logout</a>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetYourLikePeple" asp-route-email=@User.Identity.Name>Список людей который вам понравились</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetListPeopleLikedYou" asp-route-email=@User.Identity.Name>Кому ты понравился</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                    <li class="nav-item ml-auto">
+                        <a href="~/Account/Logout">Logout</a>
+                    </li>
                         }
                         else
                         {

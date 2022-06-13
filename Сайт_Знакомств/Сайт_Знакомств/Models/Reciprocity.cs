@@ -13,9 +13,17 @@ namespace Сайт_Знакомств.Models
         
         public int Id { get; set; }
 
+
+        /// <summary>
+        /// Человек который поставил нравится/like
+        /// </summary>
         [ForeignKey(nameof(User1))]
         public string User1Id { get; set; }
 
+
+        /// <summary>
+        /// Человек которого лайкнули
+        /// </summary>
         [ForeignKey(nameof(User2 ))]
         public string User2Id { get; set; }
 

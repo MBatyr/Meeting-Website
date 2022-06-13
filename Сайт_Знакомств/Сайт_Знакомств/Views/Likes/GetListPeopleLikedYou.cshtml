@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Сайт_Знакомств.Models.Reciprocity>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User1Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User2Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User1Connect)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User2Connect)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User1Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User2Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User1Connect)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User2Connect)
+            </td>
+            <td><a href="~/Likes/Reciprocate?id=@item.Id">Ответить взаимностью</a></td>
+        </tr>
+}
+    </tbody>
+</table>

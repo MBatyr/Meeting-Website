@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Сайт_Знакомств.Models.Reciprocity>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Фото
+                </th>
+                <th>
+                    Имя
+                </th>
+                <th>
+                    Фамилие
+                </th>
+                <th>
+                    Возраст
+                </th>
+                <th>
+                    Описание
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src=@item.User2.Path alt="Alternate Text" style="width:10px; height:10px " />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User2.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User2.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User2.Age)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User2.Description)
+                    </td>
+                    <td>                      
+                        <a href="~/Likes/DeleteYourLike?id=@item.Id">Убрать лайк</a>
+                        @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+

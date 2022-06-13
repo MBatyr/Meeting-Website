@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Models;
 using Сайт_Знакомств.ViewModels;
@@ -20,7 +17,7 @@ namespace Сайт_Знакомств.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _appEnvironment = appEnvironment;
+            _appEnvironment = appEnvironment;   
         }
 
         /// <summary>
@@ -72,7 +69,7 @@ namespace Сайт_Знакомств.Controllers
             return View(model);
         }
 
-        /// <summary>
+      /// <summary>
         /// Для авторизации нового пользователя
         /// </summary>
         /// <param name="returnUrl"></param>
@@ -80,7 +77,7 @@ namespace Сайт_Знакомств.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-
+           
             var loginViewModel = new LoginViewModel
             {
                 ReturnUrl = returnUrl
