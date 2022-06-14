@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ReciptoryViewModel>
+
+
+
+<div class="row col">
+    <form action="DeleteYourLike" method="post">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <br />
+                <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
+                //@Html.HiddenFor(modelInfo => item.User1Id)
+                //@Html.HiddenFor(modelInfo => item.User2Id)
+
+                @Html.DisplayName("Имя: ")
+                @Html.DisplayFor(modelItem => item.FirstName) <br />
+
+                @Html.DisplayName("Фамилия: ")
+                @Html.DisplayFor(modelItem => item.LastName) <br />
+
+                @Html.DisplayName("Возраст: ")
+                @Html.DisplayFor(modelItem => item.Age)
+
+                @Html.DisplayName("Описание:")
+                @Html.DisplayFor(modelIem => item.Description)
+            <div class="col">
+                <input type="hidden" name="User1Id" value=@item.User1Id />
+                <input type="hidden" name="User2Id" value=@item.User2Id />
+                <input type="hidden" name="User1Email" value=@item.User1Email />
+                <input type="submit" value="Убрать лайк" />
+            </div>
+            </div>
+        }
+    </form>
+
+
+</div>
