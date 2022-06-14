@@ -49,7 +49,7 @@
             @if (item.User1Id != item.User2Id)
             {
 
-                <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
+                <p><img src="@item.Path" alt="doest work" style="width:200px; height:200px " class="rounded-circle"></p>
                 @Html.HiddenFor(modelInfo => item.User1Id)
                 @Html.HiddenFor(modelInfo => item.User2Id)
 
