@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace Сайт_Знакомств.ViewModels.UserViewModels
 {
-    public class FullUserInfoViewModel
+    public class ReciptoryViewModel
     {
+        public string User1Email { get; set; }
+        public string User2Email { get; set; }
+
         public string User1Id { get; set; }
         public string User2Id { get; set; }
         public string FirstName { get; set; }
@@ -14,7 +17,5 @@ namespace Сайт_Знакомств.ViewModels.UserViewModels
         public string Path { get; set; }
         public string Description { get; set; }
         public int Age { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
     }
 }
