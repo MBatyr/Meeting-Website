@@ -56,7 +56,7 @@ namespace Сайт_Знакомств.Controllers
             return View(UserLiked);
         }
         [HttpPost]
-        public IActionResult DeleteYourLike(ReciptoryViewModel reciptory)
+        public async Task< IActionResult>DeleteYourLike(ReciptoryViewModel reciptory)
         {
             if (reciptory == null)
                 return NotFound();
@@ -66,7 +66,7 @@ namespace Сайт_Знакомств.Controllers
                 return NotFound();
 
             _context.Reciprocity.Remove(reciprocityContext);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
             return RedirectToAction(nameof(GetYourLikePeple), new { id = reciptory.User1Id });
         }
 
@@ -122,14 +122,14 @@ namespace Сайт_Знакомств.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Для получения инфы о пользоветеле которого выбрал текущий пользователь
         /// </summary>
         /// <param name="currentUserEmail"></param>
         /// <param name="user2"></param>
         /// <returns></returns>
-        public IActionResult GetDeatails(string currentUserId, string user2Id)
+        public async Task <IActionResult> GetDeatails(string currentUserId, string user2Id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == user2Id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == user2Id);
 
             if (user == null)
                 return NotFound();
@@ -150,7 +150,13 @@ namespace Сайт_Знакомств.Controllers
         }
 
 
-
+        /// <summary>
+        /// Для рандомног вывода пользователя
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="id"></param>
+        /// <param name="idUserSkip"></param>
+        /// <returns></returns>
         public async Task<IActionResult> GetRandomUser(string email, string id, string idUserSkip)
         {
             if (email != null)
@@ -180,7 +186,7 @@ namespace Сайт_Знакомств.Controllers
 
             Random rnd = new Random();
 
-            var user = users[rnd.Next(0, users.Count + 1)];
+            var user = users[rnd.Next(0, users.Count/* + 1*/)];
             return View(new NotFullUserInfoViewModel
             {
                 User1Id = currentUserId,
@@ -205,3 +211,4 @@ namespace Сайт_Знакомств.Controllers
         }
     }
 }
+    
