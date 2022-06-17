@@ -1,0 +1,28 @@
+﻿@model NotFullUserInfoViewModel
+
+<div>
+    <h4>Рандомный человек</h4>
+    <hr />
+    <p><img src="@Model.Path" style="width:500px; height:500px " class="center-img"></p>
+
+    @Html.DisplayName("ФИО: ")
+    @Html.DisplayFor(modelItem => Model.FirstName)
+    @Html.DisplayFor(modelItem => Model.LastName)
+    <br />
+
+    @Html.DisplayName("О себе: ")
+    @Html.DisplayFor(modelItem => Model.Description)
+    <br />
+
+    @Html.DisplayName("Возраст: ")
+    @Html.DisplayFor(modelItem => Model.Age)
+</div>
+<div>
+    <form method="post" asp-action="AddReciptory" asp-controller="Likes">
+        <input type="hidden" name="User1Id" value=@Model.User1Id />
+        <input type="hidden" name="User2Id" value=@Model.User2Id />
+        <input type="submit" value="Отправить" />
+    </form>
+    <a href="~/Likes/Likes">Пропустить</a>
+    @Html.ActionLink("Пропустить", "GetRandomUser", "Likes",new { idUserSkip = Model.User2Id })
+</div>
