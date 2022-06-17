@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Data;
 using Сайт_Знакомств.Models;
@@ -15,11 +16,9 @@ namespace Сайт_Знакомств.Controllers
     {
         private readonly ApplicationDbContext _context;
         private User _currentUser;
-        //private readonly UserManager<User> _userManager;
-        public LikesController(ApplicationDbContext context/*, UserManager<User> userManager*/)
+        public LikesController(ApplicationDbContext context)
         {
             _context = context;
-            //_userManager = userManager;
         }
         /// <summary>
         /// Список людей которых ты лайкнул
@@ -27,16 +26,16 @@ namespace Сайт_Знакомств.Controllers
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetYourLikePeple(string email,string id)
+        public IActionResult GetYourLikePeple(string email, string id)
         {
-            
+
             if (id != null)
             {
-               _currentUser= _context.Users.FirstOrDefault(x => x.Id == id);
+                _currentUser = _context.Users.FirstOrDefault(x => x.Id == id);
             }
             else
             {
-               _currentUser= _context.Users.FirstOrDefault(x => x.Email == email);
+                _currentUser = _context.Users.FirstOrDefault(x => x.Email == email);
             }
             if (_currentUser == null)
                 return NotFound();
@@ -70,7 +69,7 @@ namespace Сайт_Знакомств.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(GetYourLikePeple), new { id = reciptory.User1Id });
         }
-       
+
         /// <summary>
         /// Получить список взаимных лайков
         /// </summary>
@@ -84,11 +83,11 @@ namespace Сайт_Знакомств.Controllers
             }
             else
             {
-                _currentUser = _context.Users.FirstOrDefault(x => x.Email== email);
+                _currentUser = _context.Users.FirstOrDefault(x => x.Email == email);
             }
             if (_currentUser == null)
                 return NotFound();
-            
+
             var myLikes = _context.Reciprocity.Where(x => x.User1Id == _currentUser.Id)
                                                 .Select(x => new FullReciptory
                                                 {
@@ -104,13 +103,13 @@ namespace Сайт_Знакомств.Controllers
             var result = myLikes.Intersect(whoMeLikes).ToList();
 
             var fullInfoUser = new List<FullReciptory>();
-            FullReciptory oneInfoUser  = new FullReciptory();
+            FullReciptory oneInfoUser = new FullReciptory();
             var oneReciptor = new Reciprocity();
             for (int i = 0; i < result.Count; i++)
             {
                 oneReciptor = _context.Reciprocity.Include(x => x.User2).FirstOrDefault(x => x.User1Id == result[i].User1Id);
-                if(oneReciptor != null)
-                {               
+                if (oneReciptor != null)
+                {
                     oneInfoUser.User1Id = _currentUser.Id;
                     oneInfoUser.User2Id = oneReciptor.User2Id;
                     oneInfoUser.FirstName = oneReciptor.User2.FirstName;
@@ -138,7 +137,7 @@ namespace Сайт_Знакомств.Controllers
             var userFullInfo = new FullUserInfoViewModel
             {
                 User1Id = currentUserId,
-                User2Id= user2Id,
+                User2Id = user2Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Path = user.Path,
@@ -150,5 +149,59 @@ namespace Сайт_Знакомств.Controllers
             return View(userFullInfo);
         }
 
+
+
+        public async Task<IActionResult> GetRandomUser(string email, string id, string idUserSkip)
+        {
+            if (email != null)
+                _currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            else
+                _currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            var currentUserId = _currentUser.Id;
+            var UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userIds = _context.Reciprocity.Where(x => x.User1Id == currentUserId).Select(x => x.User2Id).Distinct().ToList();
+            userIds.Add(currentUserId);
+            if (idUserSkip != null)
+                userIds.Add(idUserSkip);
+
+            var users = await _context.Users
+                .Where(x => !userIds.Contains(x.Id))
+                .Select(x => new NotFullUserInfoViewModel
+                {
+                    User2Id = x.Id,
+                    Path = x.Path,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Description = x.Description,
+                    Age = x.Age
+                })
+                .ToListAsync();
+
+            Random rnd = new Random();
+
+            var user = users[rnd.Next(0, users.Count + 1)];
+            return View(new NotFullUserInfoViewModel
+            {
+                User1Id = currentUserId,
+                User2Id = user.User2Id,
+                Path = user.Path,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Description = user.Description,
+                Age = user.Age
+            });
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetRandomUser(FullReciptory reciptory)
+        {
+            if (reciptory.User2Id == null || reciptory.User1Id == null)
+                return NotFound();
+
+            _context.Reciprocity.Add(new Reciprocity { User1Id = reciptory.User1Id,User2Id =reciptory.User2Id});
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(GetRandomUser),new { id  = reciptory.User1Id});
+        }
     }
 }
