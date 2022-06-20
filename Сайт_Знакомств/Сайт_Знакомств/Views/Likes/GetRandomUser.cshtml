@@ -21,8 +21,7 @@
     <form method="post" asp-action="AddReciptory" asp-controller="Likes">
         <input type="hidden" name="User1Id" value=@Model.User1Id />
         <input type="hidden" name="User2Id" value=@Model.User2Id />
-        <input type="submit" value="Отправить" />
+        <input type="submit" value="Нравится" style="color:red" />
     </form>
-    <a href="~/Likes/Likes">Пропустить</a>
     @Html.ActionLink("Пропустить", "GetRandomUser", "Likes",new { idUserSkip = Model.User2Id })
 </div>

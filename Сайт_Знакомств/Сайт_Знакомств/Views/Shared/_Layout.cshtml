@@ -11,20 +11,13 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Сайт_Знакомств</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Search">Одинокий волк</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-
 
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -35,10 +28,10 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetRandomUser" asp-route-email=@User.Identity.Name>Рандом</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetReciprocity" asp-route-email=@User.Identity.Name>Взаимность</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetYourLikePeple">Список понравившихся</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile" >Profile</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetReciprocity" asp-route-email=@User.Identity.Name>Взаимность</a>
                             </li>
                             <li class="nav-item ml-auto">
                                 <button class="header__profile-btn">
@@ -56,16 +49,13 @@
                                 <div class="header__popup-window">
                                     <ul>
                                         <li>
-                                            <a href="/">Мой профиль </a>
-                                        </li>
-                                        <li>
-                                            <a href="/">Настройки</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Мой профиль</a>
                                         </li>
                                         <li>
                                             <a asp-area="" asp-controller="Likes" asp-action="GetReciprocity" asp-route-email=@User.Identity.Name>Взаимность</a>
                                         </li>
                                         <li>
-                                            <a href="/">Список понравившихся </a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetYourLikePeple">Список понравившихся</a>
                                         </li>
                                         <li>
                                             <a asp-area="" asp-controller="Account" asp-action="Logout" asp-route-email=@User.Identity.Name>Выйти</a>

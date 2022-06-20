@@ -4,7 +4,10 @@
     ViewData["Title"] = "Search";
     int countModel = Model.Count();
 }
-
+@if (TempData["message"] != null)
+{
+<p class="TempDataMessage">@TempData["message"]</p>
+}
 <nav class="navbar navbar-light bg-light justify-content-between">
     <a class="navbar-brand">Найдите свою пару</a>
     <button class="btn btn-success" id="showFilterUrButton">Фильтр</button>
