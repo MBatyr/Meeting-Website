@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,9 +37,17 @@ namespace Сайт_Знакомств.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(model.DateOfBirth.Year > DateTime.Now.Year - 18)
+                int year = model.DateOfBirth.Year;
+                year = DateTime.Now.Year - 18;
+                year = DateTime.Now.Year - 100;
+                if (model.DateOfBirth.Year > DateTime.Now.Year - 18 )
                 {
                     ModelState.AddModelError("","Тебе должно быть больше 18");
+                    return View(model);
+                }
+                if(model.DateOfBirth.Year < DateTime.Now.Year - 100)
+                {
+                    ModelState.AddModelError("", "Мы не принимаем очень старых людей");
                     return View(model);
                 }
                 string path = "/Files/" + model.Avatar.FileName;

@@ -10,8 +10,8 @@ using Сайт_Знакомств.Data;
 namespace Сайт_Знакомств.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220608141759_AddUserPath")]
-    partial class AddUserPath
+    [Migration("20220620151108_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -162,20 +162,20 @@ namespace Сайт_Знакомств.Migrations
                     b.Property<bool>("User1Connect")
                         .HasColumnType("bit");
 
-                    b.Property<string>("User1Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("User2Connect")
                         .HasColumnType("bit");
 
-                    b.Property<string>("User2Id")
+                    b.Property<string>("UserBeingLiked")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserWhoLiked")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("User1Id");
+                    b.HasIndex("UserBeingLiked");
 
-                    b.HasIndex("User2Id");
+                    b.HasIndex("UserWhoLiked");
 
                     b.ToTable("Reciprocity");
                 });
@@ -317,17 +317,17 @@ namespace Сайт_Знакомств.Migrations
 
             modelBuilder.Entity("Сайт_Знакомств.Models.Reciprocity", b =>
                 {
-                    b.HasOne("Сайт_Знакомств.Models.User", "User1")
+                    b.HasOne("Сайт_Знакомств.Models.User", "PersonBeingLikes")
                         .WithMany()
-                        .HasForeignKey("User1Id");
+                        .HasForeignKey("UserBeingLiked");
 
-                    b.HasOne("Сайт_Знакомств.Models.User", "User2")
+                    b.HasOne("Сайт_Знакомств.Models.User", "PersonWhoLikes")
                         .WithMany()
-                        .HasForeignKey("User2Id");
+                        .HasForeignKey("UserWhoLiked");
 
-                    b.Navigation("User1");
+                    b.Navigation("PersonBeingLikes");
 
-                    b.Navigation("User2");
+                    b.Navigation("PersonWhoLikes");
                 });
 #pragma warning restore 612, 618
         }

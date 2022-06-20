@@ -8,8 +8,8 @@ namespace Сайт_Знакомств.ViewModels.UserViewModels
 {
     public class FullReciptory
     {
-        public string User1Id { get; set; }
-        public string User2Id { get; set; }
+        public string UserWhoLiked { get; set; }
+        public string UserBeingLiked { get; set; }
 
         [Display(Name ="Имя")]
         public string FirstName { get; set; }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Data;
@@ -9,8 +8,17 @@ using Сайт_Знакомств.Models;
 
 namespace Сайт_Знакомств
 {
+    /// <summary>
+    /// Этот класс создан для хранения различных статичныхМетодов
+    /// </summary>
     public static class StaticMethods
     {
+        /// <summary>
+        /// Добавляет в метод дефолтных пользователей
+        /// </summary>
+        /// <param name="_context"></param>
+        /// <param name="userManager"></param>
+        /// <returns></returns>
         public static async Task InitialContextAsync(this ApplicationDbContext _context, UserManager<User> userManager)
         {
             if (!_context.Users.Any())

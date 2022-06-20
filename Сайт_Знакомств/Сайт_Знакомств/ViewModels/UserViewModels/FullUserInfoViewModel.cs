@@ -7,8 +7,8 @@ namespace Сайт_Знакомств.ViewModels.UserViewModels
 {
     public class FullUserInfoViewModel
     {
-        public string User1Id { get; set; }
-        public string User2Id { get; set; }
+        public string UserWhoLiked { get; set; }
+        public string UserBeingLiked { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Path { get; set; }

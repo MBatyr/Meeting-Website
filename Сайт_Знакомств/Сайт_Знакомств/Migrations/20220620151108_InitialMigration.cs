@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Сайт_Знакомств.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,9 +28,9 @@ namespace Сайт_Знакомств.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
                     Sex = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -164,8 +164,8 @@ namespace Сайт_Знакомств.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    User1Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    User2Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserWhoLiked = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserBeingLiked = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     User1Connect = table.Column<bool>(type: "bit", nullable: false),
                     User2Connect = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -173,14 +173,14 @@ namespace Сайт_Знакомств.Migrations
                 {
                     table.PrimaryKey("PK_Reciprocity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reciprocity_AspNetUsers_User1Id",
-                        column: x => x.User1Id,
+                        name: "FK_Reciprocity_AspNetUsers_UserBeingLiked",
+                        column: x => x.UserBeingLiked,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Reciprocity_AspNetUsers_User2Id",
-                        column: x => x.User2Id,
+                        name: "FK_Reciprocity_AspNetUsers_UserWhoLiked",
+                        column: x => x.UserWhoLiked,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
@@ -226,14 +226,14 @@ namespace Сайт_Знакомств.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reciprocity_User1Id",
+                name: "IX_Reciprocity_UserBeingLiked",
                 table: "Reciprocity",
-                column: "User1Id");
+                column: "UserBeingLiked");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reciprocity_User2Id",
+                name: "IX_Reciprocity_UserWhoLiked",
                 table: "Reciprocity",
-                column: "User2Id");
+                column: "UserWhoLiked");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

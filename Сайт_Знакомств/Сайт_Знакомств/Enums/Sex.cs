@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Сайт_Знакомств.Enums
+﻿namespace Сайт_Знакомств.Enums
 {
+    /// <summary>
+    /// Enum для работы с полами
+    /// </summary>
     public enum Sex
     {
         Мужчина = 1,

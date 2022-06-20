@@ -1,21 +1,16 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Data;
-using Сайт_Знакомств.Models;
-using Сайт_Знакомств.ViewModels;
 using Сайт_Знакомств.ViewModels.UserViewModels;
 
 namespace Сайт_Знакомств.Controllers
 {
     public class UserController : Controller
-    {
+    {        
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly ApplicationDbContext _context;
         public UserController(IWebHostEnvironment appEnvironment, ApplicationDbContext context)
@@ -24,6 +19,10 @@ namespace Сайт_Знакомств.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Дает возможность пользователю посмотреть свои данные
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Profile()
         {
@@ -78,6 +77,12 @@ namespace Сайт_Знакомств.Controllers
             return View(user);
         }
 
+
+        /// <summary>
+        /// Метод Post для изменения данных пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> EditProfile(EditUserViewModel model)
         

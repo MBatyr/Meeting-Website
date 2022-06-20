@@ -19,7 +19,7 @@
 
         <div class="col">
             <p><img src="@item.Path" style="width:200px; height:200px" class="rounded-circle"></p>
-            @Html.HiddenFor(modelInfo => item.User2Id)
+            @Html.HiddenFor(modelInfo => item.UserBeingLiked)
 
             @Html.DisplayName("Имя: ")
             @Html.DisplayFor(modelItem => item.FirstName) <br />
@@ -30,8 +30,8 @@
             @Html.DisplayName("Возраст: ")
             @Html.DisplayFor(modelItem => item.Age)
             <div class="col">
-                <a href="~/Home/Liked?user2Id=@item.User2Id" class="badge badge-success">Нравится</a>
-                <a href="~/Home/Info?user2Id=@item.User2Id" class="badge badge-info">Инфо</a>
+                <a href="~/Home/Liked?userBeingLiked=@item.UserBeingLiked" class="badge badge-success">Нравится</a>
+                <a href="~/Home/Info?userBeingLiked=@item.UserBeingLiked" class="badge badge-info">Инфо</a>
             </div>
         </div>
 

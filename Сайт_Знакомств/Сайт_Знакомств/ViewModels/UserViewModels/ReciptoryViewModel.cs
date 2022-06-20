@@ -7,11 +7,11 @@ namespace Сайт_Знакомств.ViewModels.UserViewModels
 {
     public class ReciptoryViewModel
     {
-        public string User1Email { get; set; }
-        public string User2Email { get; set; }
+        public string UserWhoLikedEmail { get; set; }
+        public string UserBeingLikedEmail { get; set; }
 
-        public string User1Id { get; set; }
-        public string User2Id { get; set; }
+        public string UserWhoLiked { get; set; }
+        public string UserBeingLiked { get; set; }  
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Path { get; set; }

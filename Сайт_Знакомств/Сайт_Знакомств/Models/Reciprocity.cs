@@ -1,29 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Сайт_Знакомств.Interface;
 
 namespace Сайт_Знакомств.Models
 {
     public class Reciprocity: IEntity<int>
     {
-        
+        /// <summary>
+        /// Id
+        /// </summary>
         public int Id { get; set; }
 
-        [ForeignKey(nameof(User1))]
-        public string User1Id { get; set; }
+        /// <summary>
+        /// ID человека который поставил лайк
+        /// </summary>
+        [ForeignKey(nameof(PersonWhoLikes))]
+        public string UserWhoLiked { get; set; }
 
-        [ForeignKey(nameof(User2 ))]
-        public string User2Id { get; set; }
 
-        public bool User1Connect { get; set; } = true;
-        public bool User2Connect { get; set; } = false;
+        /// <summary>
+        /// Id человека которому поставили лайк
+        /// </summary>
+        [ForeignKey(nameof(PersonBeingLikes ))]
+        public string UserBeingLiked { get; set; }
 
-        public virtual User User1 { get; set; }
-        public  User User2 { get; set; }
+
+        /// <summary>
+        /// связь с пользователем который поставил лайк
+        /// </summary>
+        public virtual User PersonWhoLikes { get; set; }
+
+        /// <summary>
+        /// связь с пользователем которого лайкнули
+        /// </summary>
+        public  User PersonBeingLikes { get; set; }
 
     }
 }

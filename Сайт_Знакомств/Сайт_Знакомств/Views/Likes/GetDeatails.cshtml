@@ -20,9 +20,9 @@
         @Html.DisplayName("Возраст: ")
         @Html.DisplayFor(modelItem => Model.Age)
         <div class="col">
-            <a asp-action="GetReciprocity" asp-controller="Likes" asp-route-id=@Model.User1Id class="badge badge-info">Назад</a>
-            <input type="hidden" name="User1Id" value=@Model.User1Id>
-            <input type="hidden" name="User2Id" value=@Model.User2Id>
+            <a asp-action="GetReciprocity" asp-controller="Likes" asp-route-id=@Model.UserWhoLiked class="badge badge-info">Назад</a>
+            <input type="hidden" name="UserWhoLiked" value=@Model.UserWhoLiked>
+            <input type="hidden" name="UserBeingLiked" value=@Model.UserBeingLiked>
             <input type="submit" value="Убрать Лайк" />
         </div>
     </form>

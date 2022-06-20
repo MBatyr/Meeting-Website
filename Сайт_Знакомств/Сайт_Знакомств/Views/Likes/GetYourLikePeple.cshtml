@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<ReciptoryViewModel>
 
 
-
+@if (TempData["message"] != null)
+{
+    <p class="TempDataMessage">@TempData["message"]</p>
+}
 <div class="row col">
     <form action="DeleteYourLike" method="post">
         @foreach (var item in Model)
@@ -9,8 +12,8 @@
             <div class="col">
                 <br />
                 <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
-                //@Html.HiddenFor(modelInfo => item.User1Id)
-                //@Html.HiddenFor(modelInfo => item.User2Id)
+                @Html.HiddenFor(modelInfo => item.UserWhoLiked)
+                @Html.HiddenFor(modelInfo => item.UserBeingLiked)
 
                 @Html.DisplayName("Имя: ")
                 @Html.DisplayFor(modelItem => item.FirstName) <br />
@@ -23,11 +26,12 @@
 
                 @Html.DisplayName("Описание:")
                 @Html.DisplayFor(modelIem => item.Description)
-            <div class="col">
-                <input type="hidden" name="User1Id" value=@item.User1Id />
-                <input type="hidden" name="User2Id" value=@item.User2Id />
-                <input type="submit" value="Убрать лайк" />
-            </div>
+                <div class="col">
+                    <a href="/Files/@item.UserBeingLiked">content</a>
+                    <input type="hidden" name="UserWhoLiked" value=@item.UserWhoLiked />
+                    <input type="hidden" name="UserBeingLiked" value=@item.UserBeingLiked />
+                    <input type="submit" value="Убрать лайк" />
+                </div>
             </div>
         }
     </form>
