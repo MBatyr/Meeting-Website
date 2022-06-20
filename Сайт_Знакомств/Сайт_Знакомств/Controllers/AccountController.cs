@@ -38,6 +38,11 @@ namespace Сайт_Знакомств.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(model.DateOfBirth.Year > DateTime.Now.Year - 18)
+                {
+                    ModelState.AddModelError("","Тебе должно быть больше 18");
+                    return View(model);
+                }
                 string path = "/Files/" + model.Avatar.FileName;
                 using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
@@ -59,7 +64,7 @@ namespace Сайт_Знакомств.Controllers
                 if (result.Succeeded)
                 {                   
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Search", "Home");
                 }
                 else
                 {

@@ -41,6 +41,10 @@ namespace Сайт_Знакомств.Controllers
                                                         Description = x.User2.Description
                                                     })
                                                     .ToList();
+            if(UserLiked.Count < 1)
+            {
+                TempData["message"] = "Ты никого не лайкал, лайкни кого нибудь заколебал";
+            }
             return View(UserLiked);
         }
 
@@ -88,6 +92,12 @@ namespace Сайт_Знакомств.Controllers
                                                         User2Id = x.User1Id
                                                     });
             var result = myLikes.Intersect(whoMeLikes).ToList();
+
+            if(result.Count < 1)
+            {
+                TempData["message"] = "Ты очень не красивый тебя покачто никто не лайкнул";
+                return RedirectToAction("Search","Home");
+            }
 
             var fullInfoUser = new List<FullReciptory>();
             FullReciptory oneInfoUser = new FullReciptory();
