@@ -2,28 +2,27 @@
 
 @{
     ViewData["Title"] = "Search";
+    int countModel = Model.Count();
 }
-<h3>@DateTime.Now</h3>
 
 <nav class="navbar navbar-light bg-light justify-content-between">
     <a class="navbar-brand">Найдите свою пару</a>
     <button class="btn btn-success" id="showFilterUrButton">Фильтр</button>
     <form class="form-inline" id="FilterForm">
-        <input name="userName" type="hidden" value="@User.Identity.Name" />
-        <input name="userName" id="userName" class="form-control mr-sm-2" type="search" placeholder="Поиск по имени" aria-label="Search">
-        <input asp-action="UserFilter" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Поиск" />
+        <input name="UserName" id="UserName" class="form-control mr-sm-2" type="search" placeholder="Поиск по имени" aria-label="Search" required>
+        <input asp-action="UserFilter" asp-controller="Home" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Поиск" />
     </form>
 </nav>
 <div class="navbar navbar-light bg-light justify-content-between">
     <form id="FilterUr" style="display:none">
         <h3>Возраст</h3>
         <div class="form-inline">
-            <input name="userName" type="hidden" value="@User.Identity.Name" />
-            <input name="Age1" id="Age1" class="form-control mr-sm-2" type="number" placeholder="От" required max="100" min="18">
-            <input name="Age2" id="Age2" class="form-control mr-sm-2" type="number" placeholder="До" required max="100" min="18">
+            <input name="MinAge" id="MinAge" class="form-control mr-sm-2" type="number" placeholder="От" required max="100" min="18">
+            <input name="MaxAge" id="MaxAge" class="form-control mr-sm-2" type="number" placeholder="До" required max="100" min="18">
         </div>
 
         <br />
+
         <h3>Пол</h3>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="Sex" value="1" id="Sex">
@@ -37,20 +36,21 @@
                 Женшина
             </label>
         </div>
-        <br /> <input asp-action="UserFilter" asp-controller="Home" class="btn btn-success" type="submit" value="Фильтр" />
+        <br />
+        <div>
+            <input asp-action="UserFilter" asp-controller="Home" class="btn btn-success" type="submit" value="Фильтр" />
+        </div>
     </form>
 </div>
 
-<div id="UserList" class="row col" >
+<br />
+<div id="UserList" class="row col">
     @foreach (var item in Model)
     {
-        <div class="col">
-            <br />
-            @if (item.User1Id != item.User2Id)
-            {
-
+        @if (item.User1Id != item.User2Id)
+        {
+            <div class="col">
                 <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
-                @Html.HiddenFor(modelInfo => item.User1Id)
                 @Html.HiddenFor(modelInfo => item.User2Id)
 
                 @Html.DisplayName("Имя: ")
@@ -62,21 +62,20 @@
                 @Html.DisplayName("Возраст: ")
                 @Html.DisplayFor(modelItem => item.Age)
                 <div class="col">
-                    @Html.ActionLink("Выбирать", "Info", new { user1Id = item.User1Id, user2Id = item.User2Id })
+                    <a href="~/Home/Liked?user2Id=@item.User2Id" class="badge badge-success">Нравится</a>
+                    <a href="~/Home/Info?user2Id=@item.User2Id" class="badge badge-info">Инфо</a>
                 </div>
-            }
-
-        </div>
+            </div>
+        }
     }
-
 
 </div>
 
 
 @section scripts
-{ 
+{
     <script type="text/javascript">
-        $(document).ready(function () {  
+        $(document).ready(function () {
 
             function showFilterUsersForm() {
                 $("#FilterUr").show();
@@ -85,52 +84,51 @@
             function hideFilterUsersForm() {
                 $("#FilterUr").hide();
             }
-
             $("#showFilterUrButton").click(function (e) {
                 $("#FilterUr").is(":visible")
                     ? hideFilterUsersForm()
                     : showFilterUsersForm();
             })
 
-            $("FilterUr").submit(function (e) {
-                e.preventDefault();
-                let Age1 = $("#Age1").val();
-                let Age2 = $("#Age2").val();
-                let Sex = $("#Sex").val();
-                let url = `/Home/UserFilter/?Age1=${Age1}/?Ag2=${Age2}/?Sex=${Sex}`;
-                $.ajax({
-                    type: "Get",
-                    url: url,
-                    error: function (result1) {
-                        alert("Error has occured");
+            //$("#FilterUr").submit(function (e) {
+            //    e.preventDefault();
+            //    let MinAge = $("#MinAge").val();
+            //    let MaxAge = $("#MaxAge").val();
+            //    let Sex = $("#Sex").val();
+            //    let url = `/Home/UserFilter/?MinAge=${MinAge}&MaxAge=${MaxAge}&Sex=${Sex}`;
+            //    $.ajax({
+            //        type: "Get",
+            //        url: url,
+            //        error: function (result) {
+            //            alert("Пользователь таким параметром не найден");
+            //        },
+            //        success: function (result) {
+            //            $("#UserList").html(result)
+            //        }
 
-                    },
-                    success: function (result1) {
-                        $("#UserList").html(result1)
-                    }
-                });
+            //    });
 
-            });
+            //});
 
             $("#FilterForm").submit(function (e) {
                 e.preventDefault();
-                let userName = $("#userName").val();
-                let url = `/Home/UserFilter/?userName=${userName}`;
+                let UserName = $("#UserName").val();
+                let url = `/Home/UserFilter/?UserName=${UserName}`;
                 $.ajax({
                     type: "Get",
                     url: url,
                     error: function (result) {
-                        alert("Error has occured");
+                        alert("Пользователь таким именем не найден");
                     },
                     success: function (result) {
-                        $("#UserList").html(result);
+                        $("#UserList").html(result)
                     }
-                    
 
                 });
             });
         })
     </script>
+
 }
 
 

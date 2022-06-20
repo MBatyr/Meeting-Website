@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Data;
 using Сайт_Знакомств.Models;
@@ -34,19 +35,18 @@ namespace Сайт_Знакомств.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search(string email)
+        public IActionResult Search(string email,string nams)
         {
-
-            var currenUser = _context.Users.FirstOrDefault(x => x.Email == email);
-            if (currenUser == null)
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (currentUserId == null)
                 return NotFound();
 
-            var rec = _context.Reciprocity.Include(x => x.User2).Where(x => x.User1.Id == currenUser.Id).ToList();
+            var rec = _context.Reciprocity.Include(x => x.User2).Where(x => x.User1.Id == currentUserId).ToList();
 
             var users = _context.Users
                       .Select(x => new NotFullUserInfoViewModel
                       {
-                          User1Id = currenUser.Id,
+                          User1Id = currentUserId,
                           User2Id = x.Id,
                           FirstName = x.FirstName,
                           LastName = x.LastName,
@@ -69,86 +69,89 @@ namespace Сайт_Знакомств.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult UserFilter(string userName1, string userName, int Age1, int Age2, int Sex)
+        public IActionResult UserFilter(UserFilterViewModel  model)
         {
-
-            var user1 = _context.Users.FirstOrDefault(x => x.Email == userName1);
-            if (userName != null)
+            if (model.Sex == 1)
             {
 
+                var pers = _context.Users.ToList()
+                .Where(x => x.Age >= model.MinAge)
+                .Where(x => x.Age <= model.MaxAge)
+                .Where(x => x.Sex == Enums.Sex.Мужчина)
+              .Select(x => new NotFullUserInfoViewModel
+              {
+                  User2Id = x.Id,
+                  FirstName = x.FirstName,
+                  LastName = x.LastName,
+                  Path = x.Path,
+                  Age = x.Age,
+
+              }).ToList();
+
+                if (pers.Count == 0)
+                {
+                    ViewBag.Message = "Пользователи такими параметрами не найдены";
+                }
+                return View(pers);
+            }
+            else if (model.Sex == 2)
+            {
+                var pers = _context.Users.ToList()
+               .Where(x => x.Age >= model.MinAge)
+               .Where(x => x.Age <= model.MaxAge)
+               .Where(x => x.Sex == Enums.Sex.Женщина)
+             .Select(x => new NotFullUserInfoViewModel
+             {
+                 User2Id = x.Id,
+                 FirstName = x.FirstName,
+                 LastName = x.LastName,
+                 Path = x.Path,
+                 Age = x.Age,
+
+             }).ToList();
+
+                if (pers.Count == 0)
+                {
+                    ViewBag.Message = "Пользователи такими параметрами не найдены";
+                }
+                return View(pers);
+            }
+
+            else if (model.UserName != null)
+            {
+                var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var pers = _context.Users
-                .Where(x => x.FirstName == userName)
+                .Where(x => x.FirstName.Contains(model.UserName))
                 .Select(x => new NotFullUserInfoViewModel
                 {
-                    //User1Id = user1.Id,
+                    User1Id = currentUserId,
                     User2Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     Path = x.Path,
                     Age = x.Age,
-                });
+                }).ToList();
 
-
-
-                return PartialView(pers.ToList());
-            }
-            else
-            {
-                if (Sex == 1)
+                if (pers.Count == 0)
                 {
-                    var pers = _context.Users.ToList()
-                    .Where(x => x.Age >= Age1)
-                    .Where(x => x.Age <= Age2)
-                    .Where(x => x.Sex == Enums.Sex.Мужчина)
-                  .Select(x => new NotFullUserInfoViewModel
-                  {
-                      User1Id = user1.Id,
-                      User2Id = x.Id,
-                      FirstName = x.FirstName,
-                      LastName = x.LastName,
-                      Path = x.Path,
-                      Age = x.Age,
-
-                  }).ToList();
-                    return PartialView(pers);
+                    return NotFound();
                 }
-                else
-                {
-                    var pers = _context.Users.ToList()
-                   .Where(x => x.Age >= Age1)
-                   .Where(x => x.Age <= Age2)
-                   .Where(x => x.Sex == Enums.Sex.Женщина)
-                 .Select(x => new NotFullUserInfoViewModel
-                 {
-                     //User1Id = user1.Id,
-                     User2Id = x.Id,
-                     FirstName = x.FirstName,
-                     LastName = x.LastName,
-                     Path = x.Path,
-                     Age = x.Age,
 
-                 }).ToList();
-                    return PartialView(pers);
-                }
+                return PartialView(pers);
             }
-            return NotFound();
+            return BadRequest();
         }
-
         [HttpGet]
-        [AutoValidateAntiforgeryToken]
-        public IActionResult Info(string user1Id, string user2Id)
+        public IActionResult Info(string user2Id)
         {
-            if (ModelState.IsValid)
+            if (user2Id != null)
             {
                 var user = _context.Users.Find(user2Id);
-                if (user2Id != null)
+                if (user.Id != null)
                 {
-
 
                     var model = new NotFullUserInfoViewModel
                     {
-                        User1Id = user1Id,
                         User2Id = user.Id,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
@@ -163,25 +166,26 @@ namespace Сайт_Знакомств.Controllers
             }
             return NotFound();
         }
-        [HttpPost]
-        public IActionResult Liked(NotFullUserInfoViewModel model)
+
+
+        public IActionResult Liked(string user2Id)
         {
-            if (ModelState.IsValid)
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (currentUserId != null && user2Id != null)
             {
-                var user1 = _context.Users.FirstOrDefault(x => x.Id == model.User1Id);
-                var user2 = _context.Users.FirstOrDefault(x => x.Id == model.User2Id);
-                if (user1 != null && user2 != null)
+                var user2 = _context.Users.FirstOrDefault(x => x.Id == user2Id);
+                if (user2 != null)
                 {
                     var connect = new Reciprocity
                     {
-                        User1Id = user1.Id,
+                        User1Id = currentUserId,
                         User1Connect = true,
                         User2Id = user2.Id,
                         User2Connect = false
                     };
                     _context.Reciprocity.Add(connect);
                     _context.SaveChanges();
-                    return RedirectToAction("Search", "Home",new { email = user1.Email });
+                    return RedirectToAction("Search", "Home");
                 }
                 return NotFound();
             }
@@ -196,3 +200,4 @@ namespace Сайт_Знакомств.Controllers
 
     }
 }
+
