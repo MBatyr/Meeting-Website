@@ -71,7 +71,9 @@ namespace Сайт_Знакомств.Controllers
                 LastName = currentUser.LastName,
                 Email = currentUser.Email,
                 Phone = currentUser.PhoneNumber,
-                Description = currentUser.Description
+                Description = currentUser.Description,
+                DateOfBirth = currentUser.DateOfBirth
+
             };
             return View(user);
         }

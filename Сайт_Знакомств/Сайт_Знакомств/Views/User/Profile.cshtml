@@ -4,7 +4,7 @@
     ViewData["Title"] = "Profile";
 }
 
-<h1 style=" align-items: center;">Profile</h1>
+<h1 style=" align-items: center;">Профиль</h1>
 
 @{
     var user = Model;
@@ -29,7 +29,7 @@
                 @Html.DisplayName("Номер телефона: ")
                 @Html.DisplayFor(modelItem => user.PhoneNumber)
 
-                <br /> <a asp-controller="User" asp-action="EditProfile" class="btn btn-success" type="submit" value="Edit frofile" >Edits Profile</a>
+                <br /> <a asp-controller="User" asp-action="EditProfile" class="btn btn-success" type="submit" value="Edit frofile" >Изменить профиль</a>
             </div>
             <div style="margin-left: 20px">
                 @Html.DisplayName("О себе: ") <br />
