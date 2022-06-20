@@ -1,17 +1,67 @@
 ﻿@model IEnumerable<User>
 @{
+    Layout = null;
     ViewData["Title"] = "Home Page";
 }
+<html>
+<head>
+    <meta name="viewport" content="width=device=width" />
+    <link rel="stylesheet" href="./css/site.css">
+    <link rel="icon" href="~/Files/title__icon.png">
+    <title>GOGOGOGO</title>
+</head>
+<body>
+    <header class="Header_main">
+        <div class="text__content">
+            <h1 class="text__text">
+                Сайт знакомств
+            </h1>
+            <h2 class="text__text2">
+                Интересные и заботливые одинокие люди старше 23 лет
+            </h2>
+            <h2 class="text__text1">Присоединяйтесь к нашему сообществу зрелых одиноких!</h2>
+            <a class="To__come" href="/Account/Login"><p>Войти</p></a>
+            <a class="To__come2" <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cайт знакомств</a></a>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            <a class="To__register" href="~/Account/Register"><p>зарегистрироваться</p></a>
+        </div>
+        <div class="Section_main">
 
-<h3>Все файлы</h3>
-@foreach (var f in Model)
-{
-    <p><img src="@f.Path" style="width:100px; height:100px "></p>
+        </div>
 
-}
+    </header>
+    <div class="text__content">
+        <h1 class="text__text">
+            Сайт знакомств
+        </h1>
+        <h2 class="text__text2">
+            Интересные и заботливые одинокие люди старше 23 лет
+        </h2>
+        <h2 class="text__text1">Присоединяйтесь к нашему сообществу зрелых одиноких!</h2>
+        <a class="To__come" href="/Account/Login"><p>Войти</p></a>
+        <a class="To__come2" <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cайт знакомств</a></a>
+
+        <a class="To__register" href="~/Account/Register"><p>зарегистрироваться</p></a>
+    </div>
+    <div class="Section_main">
+
+    </div>
+    <header>
+    </header>
+    @*<main class="Header_main">
+            <div class="text__content">
+                <h1 class="text__text">
+                    Присоединяйтесь к нашему сообществу зрелых одиноких! <br /> Интересные и заботливые одинокие люди старше 23 лет
+                </h1>
+                <h1 class="text__text1">Присоединяйтесь к нашему сообществу зрелых одиноких!</h1>
+                <a class="To__come" href="/Account/Login"><p>Ввойти</p></a>
+                <a class="To__register" href="~/Account/Register"><p>Зоздать aкаунт</p></a>
+            </div>
+            <div class="Section_main">
+
+            </div>
+
+        </main>*@
+</body>
+</html>
 
