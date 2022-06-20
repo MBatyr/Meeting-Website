@@ -28,7 +28,7 @@ namespace Сайт_Знакомств.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Users.ToList());
+            return View();
         }
 
         public IActionResult Privacy()
@@ -37,7 +37,7 @@ namespace Сайт_Знакомств.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search(string email,string nams)
+        public IActionResult Search()
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (currentUserId == null)
