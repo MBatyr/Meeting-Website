@@ -4,12 +4,14 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Data;
 using Сайт_Знакомств.Models;
 using Сайт_Знакомств.ViewModels;
+using Сайт_Знакомств.ViewModels.UserViewModels;
 
 namespace Сайт_Знакомств.Controllers
 {
@@ -26,7 +28,7 @@ namespace Сайт_Знакомств.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Users.ToList());
+            return View();
         }
 
         public IActionResult Privacy()
@@ -35,7 +37,7 @@ namespace Сайт_Знакомств.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search(string email,string nams)
+        public IActionResult Search()
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (currentUserId == null)
@@ -65,8 +67,6 @@ namespace Сайт_Знакомств.Controllers
                 }
             }
             return View(users);
-
-
         }
 
         public IActionResult UserFilter(UserFilterViewModel  model)
