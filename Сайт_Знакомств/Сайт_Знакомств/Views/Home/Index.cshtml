@@ -1,11 +1,71 @@
 ﻿@model IEnumerable<User>
 @{
+    Layout = null;
     ViewData["Title"] = "Home Page";
 }
+<html>
+<head>
+    <meta name="viewport" content="width=device=width" />
+    <link rel="stylesheet" href="./css/site.css">
+    <link rel="icon" href="~/Files/title__icon.png">
+    <title>GOGOGOGO</title>
+</head>
+<body>
+    <header class="Header_main">
+        <div class="text__content">
+            <h1 class="text__text">
+                Сайт знакомств
+            </h1>
+            <h2 class="text__text2">
+                Интересные и заботливые одинокие люди старше 23 лет
+            </h2>
+            <h2 class="text__text1">Присоединяйтесь к нашему сообществу зрелых одиноких!</h2>
+            <a class="To__come" href="/Account/Login"><p>Войти</p></a>
+            <a class="To__come2" <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cайт знакомств</a></a>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            <a class="To__register" href="~/Account/Register"><p>зарегистрироваться</p></a>
+        </div>
+        <div class="Section_main">
 
+        </div>
+    </header>
+    <header>
+        <div class="text__content2">
+            <h2 class="team__title">
+                Наша команда 
+            </h2>
+            <div class="team__container">
+                <img src="/Files/Фото всех.jpg" class="photo_comand" alt="Фото команды" />
+                <div class="team__info">
+                    <h3 class="team__info-title">
+                        Сайт разрабатывали:
+                    </h3>
+                    
+                    <ul class="team__list">
+                        <li class="team__item">
+                            Маруф
+                        </li>
+                        <li class="team__item">
+                            Бахтыбек
+                        </li>
+                        <li class="team__item">
+                            Батырхан
+                        </li>
+                        <li class="team__item">
+                            Ибрагим
+                        </li>
+                        <li class="team__item">
+                            Айгерим
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+ 
+
+        </div>
+    </header>
+  
+</body>
+</html>
 
