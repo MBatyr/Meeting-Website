@@ -4,11 +4,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Сайт_Знакомств.Data;
 using Сайт_Знакомств.Models;
 using Сайт_Знакомств.ViewModels;
+using Сайт_Знакомств.ViewModels.UserViewModels;
 
 namespace Сайт_Знакомств.Controllers
 {
@@ -25,7 +27,7 @@ namespace Сайт_Знакомств.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Users.ToList());
+            return View();
         }
 
         public IActionResult Privacy()
@@ -44,6 +46,7 @@ namespace Сайт_Знакомств.Controllers
             var rec = _context.Reciprocity.Include(x => x.User2).Where(x => x.User1.Id == currenUser.Id).ToList();
 
             var users = _context.Users
+                .Where(x => x.Sex != currenUser.Sex)
                       .Select(x => new NotFullUserInfoViewModel
                       {
                           User1Id = currenUser.Id,
@@ -179,7 +182,7 @@ namespace Сайт_Знакомств.Controllers
                     };
                     _context.Reciprocity.Add(connect);
                     _context.SaveChanges();
-                    return RedirectToAction("Search", "Home",new { email = user1.Email });
+                    return RedirectToAction("Search", "Home", new { email = user1.Email });
                 }
                 return NotFound();
             }
