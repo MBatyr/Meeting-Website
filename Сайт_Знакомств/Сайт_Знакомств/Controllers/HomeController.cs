@@ -68,8 +68,6 @@ namespace Сайт_Знакомств.Controllers
                 }
             }
             return View(users);
-
-
         }
 
         [HttpGet]

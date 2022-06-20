@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FullReciptory>
+@{
+
+}
+
+<div id="UserList" class="row col">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <br /> 
+                <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
+                @Html.HiddenFor(modelInfo => item.User1Id)
+                @Html.HiddenFor(modelInfo => item.User2Id)
+
+                @Html.DisplayName("Имя: ")
+                @Html.DisplayFor(modelItem => item.FirstName) <br />
+
+                @Html.DisplayName("Фамилия: ")
+                @Html.DisplayFor(modelItem => item.LastName) <br />
+                <div class="col">
+                    @Html.ActionLink("Подробнее", "GetDeatails", new { currentUserId = item.User1Id, user2Id = item.User2Id })
+                </div>            
+
+        </div>
+    }
+
+
+</div>
