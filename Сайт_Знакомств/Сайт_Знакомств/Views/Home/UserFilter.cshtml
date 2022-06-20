@@ -1,22 +1,25 @@
 ﻿@model IEnumerable<Сайт_Знакомств.ViewModels.NotFullUserInfoViewModel>
 
 @{
-    ViewData["Title"] = "Search";
+    ViewBag.Title = "UserFilter";
+
 }
 
 
+<div>
+    <a asp-action="Search" asp-controller="Home" class="badge badge-info">Назад</a>
+    <br />
+</div>
+<br />
+<h3 style="color:dodgerblue">@ViewBag.Message</h3>
 
 <div class="row col">
     @foreach (var item in Model)
     {
-        <div class="col">
-            <br />
-            @if (item.User1Id != item.User2Id)
-            {
-
-
-                <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
-                @Html.HiddenFor(modelInfo => item.User1Id)
+        if (item.User1Id != item.User2Id)
+        {
+            <div class="col">
+                <p><img src="@item.Path" style="width:200px; height:200px" class="rounded-circle"></p>
                 @Html.HiddenFor(modelInfo => item.User2Id)
 
                 @Html.DisplayName("Имя: ")
@@ -28,14 +31,12 @@
                 @Html.DisplayName("Возраст: ")
                 @Html.DisplayFor(modelItem => item.Age)
                 <div class="col">
-                    @Html.ActionLink("Вытратт", "Info", new { user1Id = item.User1Id, user2Id = item.User2Id })
+                    <a href="~/Home/Liked?user2Id=@item.User2Id" class="badge badge-success">Нравится</a>
+                    <a href="~/Home/Info?user2Id=@item.User2Id" class="badge badge-info">Инфо</a>
                 </div>
-            }
-
-        </div>
+            </div>
+        }
     }
-
-
 
 </div>
 

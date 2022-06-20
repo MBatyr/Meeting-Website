@@ -29,7 +29,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search" asp-route-email=@User.Identity.Name>Search</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Поиск</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Likes" asp-action="GetYourLikePeple" asp-route-email=@User.Identity.Name>Список тех кого ты лайкнул</a>
