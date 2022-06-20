@@ -46,7 +46,6 @@ namespace Сайт_Знакомств.Controllers
             var rec = _context.Reciprocity.Include(x => x.User2).Where(x => x.User1.Id == currentUserId).ToList();
 
             var users = _context.Users
-                .Where(x => x.Sex != currenUser.Sex)
                       .Select(x => new NotFullUserInfoViewModel
                       {
                           User1Id = currentUserId,
@@ -70,12 +69,14 @@ namespace Сайт_Знакомств.Controllers
             return View(users);
         }
 
-        public IActionResult UserFilter(UserFilterViewModel  model)
+        public IActionResult UserFilter(UserFilterViewModel model)
         {
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (model.Sex == 1)
             {
 
                 var pers = _context.Users.ToList()
+                .Where(x => x.Id != currentUserId)
                 .Where(x => x.Age >= model.MinAge)
                 .Where(x => x.Age <= model.MaxAge)
                 .Where(x => x.Sex == Enums.Sex.Мужчина)
@@ -98,6 +99,7 @@ namespace Сайт_Знакомств.Controllers
             else if (model.Sex == 2)
             {
                 var pers = _context.Users.ToList()
+                .Where(x => x.Id != currentUserId)
                .Where(x => x.Age >= model.MinAge)
                .Where(x => x.Age <= model.MaxAge)
                .Where(x => x.Sex == Enums.Sex.Женщина)
@@ -120,12 +122,12 @@ namespace Сайт_Знакомств.Controllers
 
             else if (model.UserName != null)
             {
-                var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
                 var pers = _context.Users
+                .Where(x => x.Id != currentUserId)
                 .Where(x => x.FirstName.Contains(model.UserName))
                 .Select(x => new NotFullUserInfoViewModel
                 {
-                    User1Id = currentUserId,
                     User2Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
