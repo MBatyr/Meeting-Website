@@ -44,6 +44,7 @@ namespace Сайт_Знакомств.Controllers
             if(UserLiked.Count < 1)
             {
                 TempData["message"] = "Ты никого не лайкал, лайкни кого нибудь заколебал";
+                return RedirectToAction("Search", "Home");
             }
             return View(UserLiked);
         }
