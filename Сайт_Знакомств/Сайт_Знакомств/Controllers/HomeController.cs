@@ -37,7 +37,10 @@ namespace Сайт_Знакомств.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Делает фильтрацию уже имеющих лайк и выводит всех у кого нет лайка ползователей в базе и передает View()
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Search()
         {
@@ -67,7 +70,12 @@ namespace Сайт_Знакомств.Controllers
             }
             return View(users);
         }
-
+        
+        /// <summary>
+        /// филтрация по имени, возраста и пола
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public IActionResult UserFilter(UserFilterViewModel model)
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -143,6 +151,11 @@ namespace Сайт_Знакомств.Controllers
             }
             return BadRequest();
         }
+        /// <summary>
+        /// Выводит информайию о пользователя
+        /// </summary>
+        /// <param name="userBeingLiked"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Info(string userBeingLiked)
         {
@@ -169,7 +182,12 @@ namespace Сайт_Знакомств.Controllers
             return NotFound();
         }
 
-        
+        /// <summary>
+        /// Сохраняет в базу пользователя получивщий лайк
+        /// </summary>
+        /// <param name="userBeingLiked"></param>
+        /// <returns></returns>
+        [HttpPost]
         public IActionResult Liked(string userBeingLiked)
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
