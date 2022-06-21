@@ -11,45 +11,45 @@
     <div class="col-md-4">
         <form asp-action="EditProfile" asp-controller="User" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Email" />
+            @*<input type="hidden" asp-for="Email" />*@
             <img src="@Model.Path" style="width:200px; height:200px ">
             <div class="form-group">
                 <label asp-for="Avatar" class="control-label">Аватар</label>
-                <input  asp-for="Path" name="Avatar" type="file" class="form-control" />
+                <input asp-for="Path" name="Avatar" type="file" class="form-control" />
                 <span asp-validation-for="Path" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label">Имя: </label>
-                <input asp-for="FirstName" class="form-control" required/>
+                <input asp-for="FirstName" class="form-control" required />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" required/>
+                <label asp-for="LastName" class="control-label">Фамилия: </label>
+                <input asp-for="LastName" class="form-control" required />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label">Email</label>
-                <input asp-for="Email" class="form-control" required/>
+                <label asp-for="Email" class="control-label">Email: </label>
+                <input asp-for="Email" class="form-control"  />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label">Дата рождения: </label>
-                <input asp-for="DateOfBirth" class="form-control"required />
+                <input asp-for="DateOfBirth" class="form-control" required />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Phone" class="control-label">Номер телефона: </label>
-                <input asp-for="Phone" class="form-control" required/>
+                <input asp-for="Phone" class="form-control" required />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label">О себе: </label>
-                <input asp-for="Description" class="form-control" required="10"/>
+                <input asp-for="Description" class="form-control" required="10" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="btn btn-success" type="submit" value="Сохранить изменения"/>
+                <input class="btn btn-success" type="submit" value="Сохранить изменения" />
             </div>
         </form>
     </div>
@@ -57,7 +57,7 @@
 
 <div>
     <a asp-action="Profile" asp-controller="User">Назад</a>
-</div>
+</div>  
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

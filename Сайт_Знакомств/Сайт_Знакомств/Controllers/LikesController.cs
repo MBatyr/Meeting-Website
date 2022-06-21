@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using Сайт_Знакомств.ViewModels.UserViewModels;
 
 namespace Сайт_Знакомств.Controllers
 {
+    [Authorize]
     public class LikesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -32,6 +34,7 @@ namespace Сайт_Знакомств.Controllers
                                                     .Where(x => x.UserWhoLiked == currentUserId)
                                                     .Select(x => new ReciptoryViewModel
                                                     {
+                                                        Id = x.Id,
                                                         UserWhoLiked = currentUserId,
                                                         UserBeingLiked = x.UserBeingLiked,
                                                         Path = x.PersonBeingLikes.Path,
@@ -54,18 +57,15 @@ namespace Сайт_Знакомств.Controllers
         /// </summary>
         /// <param name="reciptory"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult>DeleteYourLike(ReciptoryViewModel reciptory)
+        public async Task<IActionResult> DeleteYourLike(int id)
         {
-            if (reciptory == null)
+            var userReciptroy = _context.Reciprocity.FirstOrDefault(x => x.Id == id);
+
+            if (userReciptroy == null)
                 return NotFound();
 
-            var reciprocityContext = _context.Reciprocity.FirstOrDefault(x => x.UserWhoLiked == reciptory.UserWhoLiked && x.UserBeingLiked == reciptory.UserBeingLiked);
-            if (reciprocityContext == null)
-                return NotFound();
-
-            _context.Reciprocity.Remove(reciprocityContext);
-           await _context.SaveChangesAsync();
+            _context.Reciprocity.Remove(userReciptroy);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(GetYourLikePeple));
         }

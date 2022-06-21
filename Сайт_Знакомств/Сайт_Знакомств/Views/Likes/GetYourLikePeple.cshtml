@@ -6,35 +6,28 @@
     <p class="TempDataMessage">@TempData["message"]</p>
 }
 <div class="row col">
-    <form action="DeleteYourLike" method="post">
         @foreach (var item in Model)
         {
-            <div class="col">
-                <br />
-                <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
-                @Html.HiddenFor(modelInfo => item.UserWhoLiked)
-                @Html.HiddenFor(modelInfo => item.UserBeingLiked)
+    <div class="col">
+        <br />
+        <p><img src="@item.Path" style="width:200px; height:200px " class="rounded-circle"></p>
+        @Html.HiddenFor(modelInfo => item.UserWhoLiked)
+        @Html.HiddenFor(modelInfo => item.UserBeingLiked)
 
-                @Html.DisplayName("Имя: ")
-                @Html.DisplayFor(modelItem => item.FirstName) <br />
+        @Html.DisplayName("Имя: ")
+        @Html.DisplayFor(modelItem => item.FirstName) <br />
 
-                @Html.DisplayName("Фамилия: ")
-                @Html.DisplayFor(modelItem => item.LastName) <br />
+        @Html.DisplayName("Фамилия: ")
+        @Html.DisplayFor(modelItem => item.LastName) <br />
 
-                @Html.DisplayName("Возраст: ")
-                @Html.DisplayFor(modelItem => item.Age)
+        @Html.DisplayName("Возраст: ")
+        @Html.DisplayFor(modelItem => item.Age)
 
-                @Html.DisplayName("Описание:")
-                @Html.DisplayFor(modelIem => item.Description)
-                <div class="col">
-                    <a href="/Files/@item.UserBeingLiked">content</a>
-                    <input type="hidden" name="UserWhoLiked" value=@item.UserWhoLiked />
-                    <input type="hidden" name="UserBeingLiked" value=@item.UserBeingLiked />
-                    <input type="submit" value="Убрать лайк" />
-                </div>
-            </div>
+        @Html.DisplayName("Описание:")  <br />
+        @Html.DisplayFor(modelIem => item.Description)
+        <div class="col">
+            <a href="~/Likes/DeleteYourLike?id=@item.Id" class="badge badge-warning">Убрать лайк</a>
+        </div>
+    </div>
         }
-    </form>
-
-
 </div>

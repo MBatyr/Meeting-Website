@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using Сайт_Знакомств.ViewModels;
 
 namespace Сайт_Знакомств.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,9 +23,14 @@ namespace Сайт_Знакомств.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            return View();
+
+            if (HttpContext.User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(Search));
+
+                return View();
         }
 
         public IActionResult Privacy()

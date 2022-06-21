@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ using Сайт_Знакомств.ViewModels.UserViewModels;
 
 namespace Сайт_Знакомств.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {        
         private readonly IWebHostEnvironment _appEnvironment;
@@ -84,8 +86,7 @@ namespace Сайт_Знакомств.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> EditProfile(EditUserViewModel model)
-        
+        public async Task<IActionResult> EditProfile(EditUserViewModel model)        
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = _context.Users.FirstOrDefault(x => x.Id == currentUserId);
@@ -99,7 +100,7 @@ namespace Сайт_Знакомств.Controllers
                     await model.Avatar.CopyToAsync(fileStream);
                 }
 
-                var currentUser = _context.Users.FirstOrDefault(x => x.Email == model.Email);
+                var currentUser = _context.Users.FirstOrDefault(x => x.Id == currentUserId);
 
                 currentUser.Email = model.Email;
                 currentUser.UserName = model.Email;
@@ -114,7 +115,7 @@ namespace Сайт_Знакомств.Controllers
             {
                 var path = user.Path;
 
-                var currentUser = _context.Users.FirstOrDefault(x => x.Email == model.Email);
+                var currentUser = _context.Users.FirstOrDefault(x => x.Id == currentUserId);
 
                 currentUser.Email = model.Email;
                 currentUser.UserName = model.Email;

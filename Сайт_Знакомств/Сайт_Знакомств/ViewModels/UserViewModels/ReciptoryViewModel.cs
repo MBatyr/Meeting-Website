@@ -10,6 +10,7 @@ namespace Сайт_Знакомств.ViewModels.UserViewModels
         public string UserWhoLikedEmail { get; set; }
         public string UserBeingLikedEmail { get; set; }
 
+        public int Id { get; set; }
         public string UserWhoLiked { get; set; }
         public string UserBeingLiked { get; set; }  
         public string FirstName { get; set; }
