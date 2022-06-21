@@ -17,7 +17,7 @@ namespace Сайт_Знакомств.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IWebHostEnvironment _appEnvironment;
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment appEnvironment)
-        {
+        {   
             _userManager = userManager;
             _signInManager = signInManager;
             _appEnvironment = appEnvironment;

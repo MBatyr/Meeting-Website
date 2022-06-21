@@ -38,6 +38,10 @@ namespace Сайт_Знакомств.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Поиск по критериям
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Search()
         {
@@ -68,6 +72,11 @@ namespace Сайт_Знакомств.Controllers
             return View(users);
         }
 
+        /// <summary>
+        /// Показывает людей которые соответствуют заданным критериям
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public IActionResult UserFilter(UserFilterViewModel model)
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -143,6 +152,12 @@ namespace Сайт_Знакомств.Controllers
             }
             return BadRequest();
         }
+
+        /// <summary>
+        /// просмотр не полной информации человека
+        /// </summary>
+        /// <param name="userBeingLiked"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Info(string userBeingLiked)
         {
@@ -169,7 +184,11 @@ namespace Сайт_Знакомств.Controllers
             return NotFound();
         }
 
-        
+        /// <summary>
+        /// Для кнопки поставить лайк
+        /// </summary>
+        /// <param name="userBeingLiked"></param>
+        /// <returns></returns>
         public IActionResult Liked(string userBeingLiked)
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
