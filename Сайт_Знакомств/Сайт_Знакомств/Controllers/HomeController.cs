@@ -187,7 +187,6 @@ namespace Сайт_Знакомств.Controllers
         /// </summary>
         /// <param name="userBeingLiked"></param>
         /// <returns></returns>
-        [HttpPost]
         public IActionResult Liked(string userBeingLiked)
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
